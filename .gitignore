@@ -66,3 +66,7 @@ PERFORMANCE_BENCHMARK_GPU_AREA_16J.md
 GPU_SPARSE_CORRECTION_REPORT_16J.md
 
 RELEASE_NOTES_*.md
+
+# npm publish test logs
+npm_unpub.err
+npm_unpub.out
