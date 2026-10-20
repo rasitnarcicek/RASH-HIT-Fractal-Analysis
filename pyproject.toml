@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rash-hit-fractal-analysis"
-version = "1.2.1"
+version = "1.2.2"
 description = "Pure NumPy supercover box-counting and fractal dimension (Db) analysis engine for SVG motifs, textile designs, and architectural patterns — zero Shapely/GEOS dependency."
 readme = "README.md"
 requires-python = ">=3.9"

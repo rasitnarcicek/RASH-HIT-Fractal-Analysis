@@ -1,11 +1,11 @@
 ﻿@echo off
 setlocal EnableExtensions
 chcp 65001 >nul 2>&1
-title RASH-HIT Fractal Analysis 1.2.1
+title RASH-HIT Fractal Analysis 1.2.2
 cd /d "%~dp0"
 
 echo ===============================================================================
-echo                RASH-HIT FRACTAL ANALYSIS 1.2.1 (Windows x64)
+echo                RASH-HIT FRACTAL ANALYSIS 1.2.2 (Windows x64)
 echo     Pure NumPy Supercover Box-Counting Engine ^& Interactive Dashboard
 echo ===============================================================================
 echo.

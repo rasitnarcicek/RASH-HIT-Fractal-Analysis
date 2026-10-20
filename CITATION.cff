@@ -2,15 +2,12 @@ cff-version: 1.2.0
 message: "If you use this software in your research, please cite it as below."
 title: "RASH-HIT Fractal Analysis"
 abstract: "A research-grade, zero-rasterization computational geometry engine for exact vector box-counting, spatial occupancy profiling (fill vs. empty void ratio), and fractal dimension (Db) analysis directly from SVG vector motifs, architectural drawings, and textile patterns. Single pure NumPy engine: supercover segment analysis on a fixed-point integer lattice (geometric-contact semantics, touch_counts boundary policy) with zero Shapely/GEOS dependency."
-version: "1.2.1"
-date-released: "2026-09-03"
+version: "1.2.2"
+date-released: "2026-10-20"
 license: "Apache-2.0"
 repository-code: "https://github.com/rasitnarcicek/RASH-HIT-Fractal-Analysis"
-doi: "10.5281/zenodo.22261968"
+doi: "10.5281/zenodo.21693694"
 identifiers:
-  - type: doi
-    value: "10.5281/zenodo.22261968"
-    description: "Version DOI for RASH-HIT Fractal Analysis v1.2.1"
   - type: doi
     value: "10.5281/zenodo.21693694"
     description: "Concept DOI for RASH-HIT Fractal Analysis (always resolves to the latest version)"

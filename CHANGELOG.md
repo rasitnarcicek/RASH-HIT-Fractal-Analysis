@@ -2,7 +2,26 @@
 
 All notable changes to RASH-HIT Fractal Analysis are documented in this file.
 
-## [Unreleased] — Studio soneki kaldırıldı
+## [1.2.2] — 2026-10-20
+
+### Fixed — release infrastructure & metadata
+- **npm auto-installer missing dependency:** `bin/cli.js` now installs
+  `rich>=13.0.0` together with `numpy`/`defusedxml`/`tinycss2` on first run,
+  matching the pins in `pyproject.toml` and `requirements.txt`.
+- **Turkish/CP1254 console crash:** `run_analysis.py` and `launcher.py`
+  force-reset `stdout`/`stderr` to UTF-8 before any Rich output, fixing
+  `UnicodeEncodeError` crashes of the RASH-HIT ASCII logo on Windows code
+  pages that cannot encode block characters. Test harnesses now capture
+  subprocess output with explicit UTF-8 handling.
+- **PyPI author metadata:** the v1.2.1 upload carried a mojibake author name;
+  the v1.2.2 distributions ship the correct UTF-8 author metadata
+  (Mehmet Raşit Narçiçek).
+- **Zenodo DOIs unified:** the concept DOI (10.5281/zenodo.21693694) always
+  resolves to the latest version; per-version DOIs are minted per release.
+  CITATION.cff, README badges, BibTeX/APA/RIS blocks, and PyPI/npm metadata
+  all reference the concept DOI.
+- Version pins are synced at 1.2.2 across `package.json`, `pyproject.toml`,
+  `src/backend/__init__.py`, launcher/setup banners, and citation blocks.
 
 ### Renamed — paket ve başlıklar
 - **Project name:** `RASH-HIT Fractal Analiz Studio` → `RASH-HIT Fractal Analysis`.

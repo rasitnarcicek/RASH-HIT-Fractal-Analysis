@@ -1,7 +1,7 @@
 {
   "name": "rash-hit-fractal-analysis",
-  "version": "1.2.1",
-  "description": "Pure NumPy supercover box-counting and fractal dimension (Db) analysis engine for SVG motifs, textile designs, and architectural patterns — zero Shapely/GEOS dependency. Cite v1.2.1 via Zenodo DOI 10.5281/zenodo.22261968 (concept DOI 10.5281/zenodo.21693694 always resolves to the latest version).",
+  "version": "1.2.2",
+  "description": "Pure NumPy supercover box-counting and fractal dimension (Db) analysis engine for SVG motifs, textile designs, and architectural patterns — zero Shapely/GEOS dependency. Concept DOI 10.5281/zenodo.21693694 always resolves to the latest version.",
   "main": "bin/cli.js",
   "bin": {
     "rash-hit-fractal": "bin/cli.js",
@@ -49,7 +49,7 @@
   "funding": [
     {
       "type": "other",
-      "url": "https://doi.org/10.5281/zenodo.22261968"
+      "url": "https://doi.org/10.5281/zenodo.21693694"
     }
   ],
   "files": [

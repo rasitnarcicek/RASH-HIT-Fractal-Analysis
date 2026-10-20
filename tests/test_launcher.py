@@ -54,7 +54,7 @@ class TestLauncherCLI(unittest.TestCase):
     def test_version(self):
         res = self._run("--version")
         self.assertEqual(res.returncode, 0, res.stderr)
-        self.assertIn("1.2.1", res.stdout)
+        self.assertIn("1.2.2", res.stdout)
         self.assertIn("RASH-HIT", res.stdout)
 
     def test_check(self):

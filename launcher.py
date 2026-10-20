@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 Mehmet Raşit Narçiçek
 """
-launcher.py — RASH-HIT Fractal Analysis v1.2.1 (CPU-only).
+launcher.py — RASH-HIT Fractal Analysis v1.2.2 (CPU-only).
 
 Tek resmi etkileşimli terminal başlatıcısı.  Tüm dağıtım kanalları
 (PyPI, npm, GitHub, Windows .bat, Linux/macOS .sh) bu modülü çağırır.

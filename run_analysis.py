@@ -3,7 +3,7 @@
 
 """
 RASH-HIT Fractal Analysis
-Version: 1.2.1
+Version: 1.2.2
 
 This module is the public library surface (analyze_svg_data,
 print_analysis_report, write_analysis_file) — also a thin CLI wrapper
