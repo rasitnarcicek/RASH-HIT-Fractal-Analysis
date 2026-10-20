@@ -6,8 +6,11 @@ version: "1.2.2"
 date-released: "2026-10-20"
 license: "Apache-2.0"
 repository-code: "https://github.com/rasitnarcicek/RASH-HIT-Fractal-Analysis"
-doi: "10.5281/zenodo.21693694"
+doi: "10.5281/zenodo.23503966"
 identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23503966"
+    description: "Version DOI for RASH-HIT Fractal Analysis v1.2.2"
   - type: doi
     value: "10.5281/zenodo.21693694"
     description: "Concept DOI for RASH-HIT Fractal Analysis (always resolves to the latest version)"
