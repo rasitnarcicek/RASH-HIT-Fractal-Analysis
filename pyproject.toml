@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rash-hit-fractal-analysis"
-version = "1.2.2"
-description = "Pure NumPy supercover box-counting and fractal dimension (Db) analysis engine for SVG motifs, textile designs, and architectural patterns — zero Shapely/GEOS dependency."
+version = "1.3.0"
+description = "Exact vector-geometry box-counting and fractal dimension (Db) engine for SVG motifs: default AREA mode (visual fill incl. stroke width, vendored from Fraktal Studio, Shapely/GEOS powered) plus legacy pure NumPy supercover mode."
 readme = "README.md"
 requires-python = ">=3.9"
 license = "Apache-2.0"
@@ -47,6 +47,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.24.0",
+    "shapely>=2.0.0",
     "defusedxml>=0.7.1",
     "tinycss2>=1.2.0",
     "rich>=13.0.0",
@@ -63,4 +64,4 @@ rash-hit-fractal = "run_analysis:main"
 
 [tool.setuptools]
 package-dir = { "" = "src" }
-packages = ["backend"]
+packages = ["backend", "backend.area"]

@@ -2,6 +2,35 @@
 
 All notable changes to RASH-HIT Fractal Analysis are documented in this file.
 
+## [1.3.0] — 2026-10-21
+
+### Added — Studio-parity AREA measure mode (default)
+- **Exact vector-geometry AREA engine, vendored 1:1 from RASH-HIT Fraktal
+  Studio v2.0.0** (`src/backend/area` subpackage): SVG health inspection,
+  exact vector geometry loading (fill + stroke-expanded polygons + polygon
+  interiors via Shapely/GEOS), FIXED_ORIGIN canvas-aspect doubling grids,
+  hierarchical Shapely box counting, and the identical log-log regression
+  code. This is now the **default measure mode** so the CLI is a true
+  low-version sibling of the main Studio project: same SVG + same levels
+  → bit-for-bit identical cell counts, Db and R² (verified against the
+  Studio engine on reference motifs; e.g. `16.svg` L7 → 26 634 filled
+  cells, Db = 1.786336, R² = 0.999833; L13 → Db = 1.989439).
+- **Rationale:** the visual-fill (thickness-inclusive) counting that the
+  Studio performs is the scientifically standard box-counting rule; the
+  previous CLI shipped only the geometric-contact (supercover) semantics
+  and therefore produced different numbers from the main project.
+- **Backward compatibility:** the pure NumPy supercover engine (v1.2.2
+  behaviour) remains fully available via
+  `--measure-mode supercover` / `measure_mode="supercover"` in the library
+  API. Its reference numbers on legacy publications go unchanged.
+- New dependency: `shapely>=2.0.0` (geos wheel) — the vendored AREA path
+  requires it; the supercover path still runs NumPy-only.
+- Packaging: `backend.area` subpackage added to `[tool.setuptools]
+  packages`; ASCII reports and the on-screen report now print the active
+  measure mode and engine label.
+- Test suite extended to 146 tests, including deterministic AREA parity
+  regression snapshots of the vendored engine.
+
 ## [1.2.2] — 2026-10-20
 
 ### Fixed — release infrastructure & metadata

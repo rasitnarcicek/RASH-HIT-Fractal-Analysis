@@ -3,7 +3,7 @@
 
 """
 RASH-HIT Fractal Analysis
-Version: 1.2.2
+Version: 1.3.0
 
 This module is the public library surface (analyze_svg_data,
 print_analysis_report, write_analysis_file) — also a thin CLI wrapper
@@ -11,6 +11,14 @@ that delegates the TUI menu and direct-mode entry points to
 ``launcher.py``.  In every distribution channel, both
 ``rash-hit-fractal`` (console script) and ``python run_analysis.py``
 end up at the same place.
+
+Measure modes (v1.3.0):
+  * ``area`` (default) — exact vector-geometry visual-fill box counting
+    (filled areas + stroke-expanded polygons + polygon interiors over
+    Shapely/GEOS).  Bit-for-bit identical to the RASH-HIT Fraktal
+    Studio v2.0.0 engine (vendored subpackage ``src/backend/area``).
+  * ``supercover`` — legacy pure NumPy geometric-contact engine
+    (v1.2.2 behaviour, touch_counts boundary policy, no Shapely).
 """
 
 import argparse
@@ -35,6 +43,14 @@ from src.backend.ascii_exporter import (
 )
 from src.backend import __version__ as VERSION, __engine_name__ as ENGINE_NAME
 
+#: Supported measure modes (v1.3.0).  ``area`` is the default: exact
+#: vector-geometry visual-fill counting identical to Fraktal Studio;
+#: ``supercover`` keeps the v1.2.2 pure-NumPy contact semantics.
+MEASURE_MODES = {
+    "area": "Exact Vector Geometry Engine ( Shapely/GEOS Area )",
+    "supercover": "Pure NumPy Supercover Engine ( Geometric-Contact CPU )",
+}
+
 # Windows'ta varsayılan konsol kodlaması (cp1254 vb.) ASCII logodaki blok
 # karakterleri (█) yazamıyor: UnicodeEncodeError. stdout/stderr'i UTF-8'e
 # sabitle; aksi halde logo ve raporlar Türkçe konsolda çöküyor.
@@ -45,18 +61,28 @@ for _stream in (sys.stdout, sys.stderr):
         pass
 
 
-def analyze_svg_data(input_file: str, levels: int = 7) -> dict:
+def analyze_svg_data(input_file: str, levels: int = 7,
+                     measure_mode: str = "area") -> dict:
     """
     Executes box-counting analysis on an SVG file in pure memory.
 
-    v1.2.0: the single engine is the pure NumPy supercover engine
-    (geometric-contact semantics): open strokes are measured as their
-    supercover cell sets on a FIXED_ORIGIN integer lattice with the
-    touch_counts boundary policy. No Shapely/GEOS dependency.
+    v1.3.0: two measure modes.
+      * ``area`` (default): the vendored exact vector-geometry engine from
+        RASH-HIT Fraktal Studio (fill + stroke-expanded polygons + polygon
+        interiors over Shapely/GEOS, FIXED_ORIGIN doubling grids).  Bit-for-
+        bit identical numbers with the Studio visual-fill pipeline.
+      * ``supercover``: the v1.2.2 pure NumPy geometric-contact engine
+        (touch_counts boundary policy, no Shapely), kept for backward
+        compatibility.
     Returns structured results for zero-disk stdout reporting.
     """
     if levels < 1:
         return {"input_file": input_file, "error": f"Invalid --levels '{levels}'. Number of grid levels must be >= 1."}
+    if measure_mode not in MEASURE_MODES:
+        return {
+            "input_file": input_file,
+            "error": f"Invalid measure_mode '{measure_mode}'. Expected one of: {', '.join(MEASURE_MODES)}.",
+        }
 
     from pathlib import Path
     input_path = Path(input_file)
@@ -64,9 +90,14 @@ def analyze_svg_data(input_file: str, levels: int = 7) -> dict:
         return {"input_file": input_file, "error": f"Input file not found: {input_file}"}
 
     try:
-        manifest = run_geometric_contact(input_path, max_level=levels)
+        if measure_mode == "area":
+            # Lazy import: keeps the supercover path usable without Shapely.
+            from src.backend.area.area_pipeline import run_area
+            manifest = run_area(input_path, max_level=levels)
+        else:
+            manifest = run_geometric_contact(input_path, max_level=levels)
     except Exception as e:
-        return {"input_file": input_file, "error": f"Failed to run geometric-contact analysis on '{input_file}': {e}"}
+        return {"input_file": input_file, "error": f"Failed to run {measure_mode} analysis on '{input_file}': {e}"}
 
     level_rows = []
     for lv in range(1, levels + 1):
@@ -78,12 +109,13 @@ def analyze_svg_data(input_file: str, levels: int = 7) -> dict:
             "filled_count": p["occupied_cells"],
             "empty_count": p["empty_cells"],
             "fill_ratio": p["occupancy_ratio"],
-            "execution_time_ms": 0.0,
+            "execution_time_ms": float(p.get("execution_time_ms", 0.0) or 0.0),
         })
 
     return {
         "input_file": input_file,
         "motif_name": input_path.stem,
+        "measure_mode": manifest.get("measure_mode", measure_mode),
         "vw": manifest["viewBox"][2],
         "vh": manifest["viewBox"][3],
         "geoms_count": manifest["segment_count"],
@@ -91,7 +123,7 @@ def analyze_svg_data(input_file: str, levels: int = 7) -> dict:
         "levels": level_rows,
         "fractal_db": manifest["fractal_dimension"],
         "r2_score": manifest["r_squared"],
-        "engine_name": ENGINE_NAME,
+        "engine_name": manifest.get("engine_name", MEASURE_MODES[measure_mode]),
         "manifest": manifest,
         "error": None,
     }
@@ -109,6 +141,7 @@ def print_analysis_report(data: dict) -> None:
     print(f"  Motif Loaded       : {data['motif_name']} ({data['vw']:.2f} x {data['vh']:.2f})")
     print(f"  Geometries         : {data['geoms_count']:,} vector elements")
     print("  Analysis Engine    : cpu")
+    print(f"  Measure Mode       : {data.get('measure_mode', 'area')}")
     print(f"  Selected Engine    : {data.get('engine_name', ENGINE_NAME)}")
     print("+------------------------------------------------------------------------------+")
     print("| Level | Grid     | Total Cells | Filled Cells | Empty Cells | Occupancy % | Time ms  |")

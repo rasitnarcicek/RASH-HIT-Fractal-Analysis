@@ -1,12 +1,12 @@
-# SPDX-License-Identifier: Apache-2.0
+﻿# SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 Mehmet Raşit Narçiçek
 """
-launcher.py — RASH-HIT Fractal Analysis v1.2.2 (CPU-only).
+launcher.py — RASH-HIT Fractal Analysis v1.3.0.
 
 Tek resmi etkileşimli terminal başlatıcısı.  Tüm dağıtım kanalları
 (PyPI, npm, GitHub, Windows .bat, Linux/macOS .sh) bu modülü çağırır.
 
-Tasarım: ana projedeki (ANTİGRAVİTY/RASH-HIT Fractal Studio)
+Tasarım: ana projedeki (ANTİGRAVİTY/RASH-HIT Fraktal Studio)
 ``launcher.py`` kalıbı sadeleştirilerek uyarlandı:
 
   * borderless flat layout
@@ -15,8 +15,14 @@ Tasarım: ana projedeki (ANTİGRAVİTY/RASH-HIT Fractal Studio)
   * post-run action menu (Yeni analiz / Ana menü)
   * sub-menu pattern (toplu klasör + tekli SVG)
 
+Ölçüm modları (v1.3.0):
+  * ``area`` (varsayılan): Fraktal Studio ile birebir parity — exact
+    vector geometry (fill + stroke-expanded, Shapely/GEOS).
+  * ``supercover``: v1.2.2 saf NumPy geometric-contact motoru
+    (geriye-uyumlu referans).
+
 Web Studio / GPU / Health Scan / Dependency Repair kasıtlı olarak
-YOK — bu sürüm yalnızca CPU + saf NumPy supercover motorudur.
+YOK — bu sürüm yalnızca CPU çalışır.
 
 Ana menü:
   1. Analiz Modu (tekli SVG / toplu klasör)
@@ -25,6 +31,7 @@ Ana menü:
 
 Doğrudan mod:
   rash-hit-fractal --input motif.svg -l 5
+  rash-hit-fractal --input motif.svg --measure-mode supercover
   rash-hit-fractal --dir ./motifs -l 4
   rash-hit-fractal --version
   rash-hit-fractal --check
@@ -60,6 +67,14 @@ import numpy
 import defusedxml
 import tinycss2
 
+
+def _shapely_version() -> str:
+    try:
+        import shapely
+        return getattr(shapely, "__version__", "?")
+    except Exception:  # pragma: no cover - optional at install time
+        return "missing"
+
 from src.backend import __version__ as VERSION, __engine_name__ as ENGINE_NAME
 from src.backend.tui import (
     clear_screen,
@@ -93,10 +108,10 @@ from src.backend.ascii_exporter import (
 # Pre-run helpers
 # ---------------------------------------------------------------------------
 
-def _run_single_svg(svg_path: Path, levels: int) -> Optional[Path]:
+def _run_single_svg(svg_path: Path, levels: int, measure_mode: str = "area") -> Optional[Path]:
     """Tekli SVG analizini çalıştır, rapor dosyası yaz, yolu döndür."""
     stamp = now_stamp()
-    result = analyze_svg_data(str(svg_path), levels=levels)
+    result = analyze_svg_data(str(svg_path), levels=levels, measure_mode=measure_mode)
     if result.get("error"):
         info_panel(" Hata ", f"[bold white]✘ {result['error']}[/bold white]")
         return None
@@ -116,7 +131,7 @@ def _run_single_svg(svg_path: Path, levels: int) -> Optional[Path]:
     return out_path
 
 
-def _run_batch_dir(folder: Path, levels: int) -> Optional[Path]:
+def _run_batch_dir(folder: Path, levels: int, measure_mode: str = "area") -> Optional[Path]:
     """Toplu klasör analizini çalıştır; kitap rapor yolunu döndür."""
     stamp = now_stamp()
     svg_files = sorted(folder.glob("*.svg"))
@@ -140,7 +155,7 @@ def _run_batch_dir(folder: Path, levels: int) -> Optional[Path]:
 
     written: list = []
     for i, f in enumerate(svg_files, start=1):
-        res = analyze_svg_data(str(f), levels=levels)
+        res = analyze_svg_data(str(f), levels=levels, measure_mode=measure_mode)
         if res.get("error"):
             table.add_row(f"[{i}/{len(svg_files)}]", f.name, "ERR", "-", "-")
             continue
@@ -293,11 +308,14 @@ def _system_information_screen() -> None:
     print_logo()
     rows = [
         ("RASH-HIT Version", f"v{VERSION}"),
+        ("Default Measure Mode", "area (exact vector geometry, Shapely/GEOS)"),
+        ("Legacy Measure Mode", "supercover (--measure-mode supercover)"),
         ("Compute Engine", ENGINE_NAME),
         ("Python Runtime", f"Python {platform.python_version()}"),
         ("Operating System", f"{platform.system()} {platform.machine()}"),
         ("CPU Processor", platform.processor() or "Unknown"),
         ("NumPy", numpy.__version__),
+        ("Shapely", _shapely_version()),
         ("defusedxml", defusedxml.__version__),
         ("tinycss2", tinycss2.__version__),
         ("Compute Mode", "CPU only (no GPU)"),
@@ -356,6 +374,7 @@ def _print_check() -> None:
     rows = [
         ("Python", platform.python_version(), True),
         ("NumPy", numpy.__version__, True),
+        ("Shapely (GEOS)", _shapely_version(), True),
         ("defusedxml", defusedxml.__version__, True),
         ("tinycss2", tinycss2.__version__, True),
     ]
@@ -379,7 +398,8 @@ def _direct_cli(args: argparse.Namespace) -> int:
     target = args.input or args.dir
     target_path = Path(target)
     if target_path.is_file():
-        result = analyze_svg_data(str(target_path), levels=args.levels)
+        result = analyze_svg_data(str(target_path), levels=args.levels,
+                                  measure_mode=args.measure_mode)
         if result.get("error"):
             console.print(f"[bold white]✘ {result['error']}[/bold white]")
             return 1
@@ -398,7 +418,7 @@ def _direct_cli(args: argparse.Namespace) -> int:
             f"[bold white]Toplu Analiz:[/bold white] "
             f"[bold white]{target_path.name}/[/bold white] ({svg_count} dosya)\n"
         )
-        _run_batch_dir(target_path, args.levels)
+        _run_batch_dir(target_path, args.levels, measure_mode=args.measure_mode)
         return 0
     console.print(f"[bold white]✘ Yol bulunamadı: {target}[/bold white]")
     return 1
@@ -408,13 +428,21 @@ def main(argv: Optional[List[str]] = None) -> int:
     """Tüm dağıtım kanalları için tek giriş noktası."""
     parser = argparse.ArgumentParser(
         prog="rash-hit-fractal",
-        description="RASH-HIT Fractal Analysis — pure NumPy supercover box-counting (CPU only).",
+        description="RASH-HIT Fractal Analysis — exact vector-geometry box-counting "
+                    "(area mode, Shapely/GEOS; Studio parity) with a legacy pure-NumPy "
+                    "supercover mode (v1.2.2 semantics). CPU only.",
     )
     grp = parser.add_mutually_exclusive_group(required=False)
     grp.add_argument("-i", "--input", type=str, help="Input SVG file path (direct mode)")
     grp.add_argument("-d", "--dir", type=str, help="Directory of SVG files (direct batch mode)")
     parser.add_argument("-l", "--levels", type=int, default=7,
                         help="Number of grid levels (default: 7)")
+    parser.add_argument("-m", "--measure-mode", type=str, default="area",
+                        choices=["area", "supercover"],
+                        help="Box-counting measure mode (default: area = exact "
+                             "vector-geometry visual fill incl. stroke width, "
+                             "Shapely/GEOS; 'supercover' = legacy pure-NumPy "
+                             "geometric-contact engine, v1.2.2 behaviour)")
     parser.add_argument("-v", "--version", action="version",
                         version=f"RASH-HIT Fractal Analysis v{VERSION} — {ENGINE_NAME}")
     parser.add_argument("--check", action="store_true",

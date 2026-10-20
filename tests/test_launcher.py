@@ -54,7 +54,7 @@ class TestLauncherCLI(unittest.TestCase):
     def test_version(self):
         res = self._run("--version")
         self.assertEqual(res.returncode, 0, res.stderr)
-        self.assertIn("1.2.2", res.stdout)
+        self.assertIn("1.3.0", res.stdout)
         self.assertIn("RASH-HIT", res.stdout)
 
     def test_check(self):
@@ -70,6 +70,7 @@ class TestLauncherCLI(unittest.TestCase):
         self.assertIn("Nothing to do", res.stdout)
 
     def test_input_direct_mode(self):
+        # v1.3.0: default is the AREA mode engine label (Studio parity).
         if not SAMPLE_SVG.exists():
             self.skipTest(f"sample SVG missing: {SAMPLE_SVG}")
         res = self._run("--input", str(SAMPLE_SVG), "--levels", "4")
@@ -102,7 +103,8 @@ class TestLauncherCLI(unittest.TestCase):
         self.assertIsNotNone(written, f"no L4 stamped path in: {res.stdout!r}")
         self.assertTrue(Path(written).exists())
         body = Path(written).read_text(encoding="utf-8")
-        self.assertIn("RASH-HIT Fractal Analysis Engine", body)
+        self.assertIn("RASH-HIT", body)  # v1.3.0: AREA mode engine label
+        self.assertIn("Mode      : area", body)
         self.assertIn("Fractal Dimension Db", body)
 
     def test_dir_batch_mode(self):
