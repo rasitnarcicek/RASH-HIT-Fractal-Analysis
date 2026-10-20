@@ -27,6 +27,12 @@ All notable changes to RASH-HIT Fractal Analysis are documented in this file.
   all reference the concept DOI.
 - Version pins are synced at 1.2.2 across `package.json`, `pyproject.toml`,
   `src/backend/__init__.py`, launcher/setup banners, and citation blocks.
+- Corrupt stale `uv.lock` removed: it pinned the old package name
+  (`rash-hit-fractal-analiz-studio`) at v1.0.0 and contained malformed TOML.
+  The project uses plain `pip` workflows; regenerate with `uv lock` if a uv
+  workflow is ever adopted.
+
+## [1.2.1] — 2026-09-03
 
 ### Renamed — paket ve başlıklar
 - **Project name:** `RASH-HIT Fractal Analiz Studio` → `RASH-HIT Fractal Analysis`.
@@ -37,6 +43,8 @@ All notable changes to RASH-HIT Fractal Analysis are documented in this file.
 - **Logo altı yazı:** `F R A C T A L   S T U D I O` → `F R A C T A L   A N A L Y S I S`.
 - **CLI komutu ve motor adı korunur:** `rash-hit-fractal` ve `RASH-HIT Fractal Analysis Engine` değişmedi.
 - Bu sürüm CPU konsol aracıdır; web arayüzlü sürüm ileride ayrı bir paket (Studio sonekiyle) olarak yayınlanacaktır.
+- **Test SVG rename:** `16D.svg` → `test.svg` ground-truth örnek dosyası olarak
+  standartlaştırıldı; sürüm pin'leri 1.2.1'e tazelendi.
 
 ## [1.2.0] — 2026-09-01
 
