@@ -59,7 +59,7 @@
     "launcher.py",
     "RASH-HIT-Analysis.bat",
     "setup.bat",
-    "setup.py",
+    "bootstrap_env.py",
     "start.sh",
     "requirements.txt",
     "pyproject.toml",

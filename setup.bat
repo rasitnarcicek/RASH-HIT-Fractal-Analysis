@@ -81,7 +81,7 @@ if not exist "%VENV_PY%" (
 echo.
 
 REM 3. Run comprehensive setup and diagnostics strictly inside .venv
-"%VENV_PY%" "%~dp0setup.py" %*
+"%VENV_PY%" "%~dp0bootstrap_env.py" %*
 if errorlevel 1 (
     echo.
     echo [HATA] Kurulum sirasinda bir sorun olustu. Lutfen yukaridaki mesajlari inceleyin.

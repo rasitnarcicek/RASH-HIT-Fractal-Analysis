@@ -5,6 +5,11 @@ All notable changes to RASH-HIT Fractal Analysis are documented in this file.
 ## [1.2.2] — 2026-10-20
 
 ### Fixed — release infrastructure & metadata
+- **Packaging fix:** the interactive bootstrap script `setup.py` was renamed to
+  `bootstrap_env.py`. Its `main()` ran when Setuptools executed the build
+  backend, shadowing the PEP 517 backend and breaking `python -m build` /
+  pip installs from source. Script references in `setup.bat` and `package.json`
+  were updated accordingly.
 - **npm auto-installer missing dependency:** `bin/cli.js` now installs
   `rich>=13.0.0` together with `numpy`/`defusedxml`/`tinycss2` on first run,
   matching the pins in `pyproject.toml` and `requirements.txt`.

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 Mehmet Raşit Narçiçek
 """
-setup.py — Automated Environment Setup for RASH-HIT Fractal Analysis 1.2.2.
+bootstrap_env.py — Automated Environment Setup for RASH-HIT Fractal Analysis 1.2.2.
 
 Bu sürüm CPU-only saf NumPy motorudur; GPU/CUDA/Taichi/OpenPyXL/Shapely
 içermez. Ana proje kalıbından sadeleştirilmiş, gerekli adımlar:
@@ -29,7 +29,7 @@ MIN_PY_VERSION = (3, 9)
 # ---------------------------------------------------------------------------
 # pythonw.exe tespiti: File Explorer'dan .py'ye çift tıklayınca Windows
 # pythonw.exe ile çalıştırır (no console window, sessizce kapanır). Bu
-# durumda kendimizi cmd.exe /c python setup.py ile yeniden başlatırız;
+# durumda kendimizi cmd.exe /c python bootstrap_env.py ile yeniden başlatırız;
 # böylece kullanıcı gerçek bir terminal penceresi görür.
 # ---------------------------------------------------------------------------
 
@@ -42,7 +42,7 @@ def _is_pythonw() -> bool:
 def _rerun_in_console() -> None:
     """pythonw.exe tespit edildi: setup.bat'ı yeni pencerede başlat.
 
-    File Explorer'dan ``setup.py``'ye çift tıklayınca Windows pythonw.exe
+    File Explorer'dan ``bootstrap_env.py``'ye çift tıklayınca Windows pythonw.exe
     (no-console) ile başlatır. pythonw altında ``subprocess.Popen`` +
     ``CREATE_NEW_CONSOLE | DETACHED_PROCESS`` + ``proc.wait()`` zinciri
     test edildi ve görünür pencere açılamadı (Windows job object
@@ -180,7 +180,7 @@ def install_dependencies() -> bool:
         return False
     # editable install (src/ layout) — sadece global Python'da veya editable
     # zaten kuruluysa skip et. .venv içindeyken editable install subprocess'i
-    # bazen kendi setup.py'yi recursive çağırıp pip modülünü geçici olarak
+    # bazen kendi build backend'ini recursive çağırıp pip modülünü geçici olarak
     # kilitleyebilir; bu yüzden .venv'de sys.path injection yeterli.
     in_venv = sys.prefix != getattr(sys, "base_prefix", sys.prefix)
     skip_editable = False
@@ -255,7 +255,7 @@ def ensure_user_dirs() -> None:
 
 
 def main() -> int:
-    # File Explorer'dan setup.py'ye çift tıklayınca Windows varsayılan
+    # File Explorer'dan bootstrap_env.py'ye çift tıklayınca Windows varsayılan
     # olarak pythonw.exe ile çalıştırır (no-console subprocess). Bu
     # durumda hiçbir pencere açılmaz, çıktı kullanıcıya görünmez ve
     # "direkt kapanıyor" gibi algılanır. Kendimizi cmd.exe + console
@@ -275,7 +275,7 @@ def main() -> int:
         return 1
     if not install_dependencies():
         print(color(
-            "\n[HINT] Eger .venv bozuksa: 'setup.py --reset' ile silip tekrar calistirin.\n",
+            "\n[HINT] Eger .venv bozuksa: 'bootstrap_env.py --reset' ile silip tekrar calistirin.\n",
             "93",
         ))
         return 1
