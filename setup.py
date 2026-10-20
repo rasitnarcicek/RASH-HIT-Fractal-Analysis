@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 Mehmet Raşit Narçiçek
 """
-setup.py — Automated Environment Setup for RASH-HIT Fractal Analysis 1.2.0.
+setup.py — Automated Environment Setup for RASH-HIT Fractal Analysis 1.2.1.
 
 Bu sürüm CPU-only saf NumPy motorudur; GPU/CUDA/Taichi/OpenPyXL/Shapely
 içermez. Ana proje kalıbından sadeleştirilmiş, gerekli adımlar:
@@ -101,7 +101,7 @@ def color(text: str, code: str) -> str:
 def banner() -> None:
     print(color(
         "\n================================================================================\n"
-        "             RASH-HIT FRACTAL ANALYSIS 1.2.0 - SETUP & DIAGNOSTICS\n"
+        "             RASH-HIT FRACTAL ANALYSIS 1.2.1 - SETUP & DIAGNOSTICS\n"
         "    Pure NumPy Supercover Box-Counting Engine & Interactive Dashboard\n"
         "================================================================================\n",
         "96",

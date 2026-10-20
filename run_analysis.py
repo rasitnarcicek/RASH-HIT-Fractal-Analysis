@@ -3,7 +3,7 @@
 
 """
 RASH-HIT Fractal Analysis
-Version: 1.2.0
+Version: 1.2.1
 
 This module is the public library surface (analyze_svg_data,
 print_analysis_report, write_analysis_file) — also a thin CLI wrapper
@@ -34,6 +34,15 @@ from src.backend.ascii_exporter import (
     now_stamp,
 )
 from src.backend import __version__ as VERSION, __engine_name__ as ENGINE_NAME
+
+# Windows'ta varsayılan konsol kodlaması (cp1254 vb.) ASCII logodaki blok
+# karakterleri (█) yazamıyor: UnicodeEncodeError. stdout/stderr'i UTF-8'e
+# sabitle; aksi halde logo ve raporlar Türkçe konsolda çöküyor.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8")
+    except (AttributeError, ValueError, OSError):
+        pass
 
 
 def analyze_svg_data(input_file: str, levels: int = 7) -> dict:

@@ -38,7 +38,7 @@ console = Console()
 try:
     from src.backend import __version__ as APP_VERSION, __engine_name__ as ENGINE_NAME
 except Exception:  # pragma: no cover
-    APP_VERSION = "1.2.0"
+    APP_VERSION = "1.2.1"
     ENGINE_NAME = "RASH-HIT Fractal Analysis Engine"
 
 ACCENT = "white"

@@ -7,8 +7,8 @@ const { spawnSync, spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const REQUIRED_PACKAGES = ['numpy>=1.24.0', 'defusedxml>=0.7.1', 'tinycss2>=1.2.0'];
-const REQUIRED_MODULES = ['numpy', 'defusedxml', 'tinycss2'];
+const REQUIRED_PACKAGES = ['numpy>=1.24.0', 'defusedxml>=0.7.1', 'tinycss2>=1.2.0', 'rich>=13.0.0'];
+const REQUIRED_MODULES = ['numpy', 'defusedxml', 'tinycss2', 'rich'];
 
 function findPythonCommand() {
   const candidates = process.platform === 'win32'

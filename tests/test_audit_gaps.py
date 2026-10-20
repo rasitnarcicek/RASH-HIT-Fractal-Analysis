@@ -94,7 +94,8 @@ class TestInputDirMutuallyExclusive(unittest.TestCase):
         cwd = str(Path(__file__).resolve().parent.parent)
         cmd = [sys.executable, "run_analysis.py",
                "--input", "input_svgs/test.svg", "--dir", "input_svgs"]
-        res = subprocess.run(cmd, capture_output=True, text=True, cwd=cwd)
+        res = subprocess.run(cmd, capture_output=True, text=True,
+                             encoding="utf-8", errors="replace", cwd=cwd)
         self.assertNotEqual(res.returncode, 0,
             f"Expected non-zero exit; stdout={res.stdout!r} stderr={res.stderr!r}")
         combined = res.stdout.lower() + res.stderr.lower()

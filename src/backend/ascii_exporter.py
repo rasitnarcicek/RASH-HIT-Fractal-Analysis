@@ -20,7 +20,11 @@ __all__ = [
 ]
 
 ENGINE_NAME = "RASH-HIT Fractal Analysis Engine"
-SOFTWARE_VERSION = "1.2.0"
+
+try:
+    from . import __version__ as SOFTWARE_VERSION
+except Exception:  # pragma: no cover
+    SOFTWARE_VERSION = "1.2.1"
 HEADER_WIDTH = 80
 
 

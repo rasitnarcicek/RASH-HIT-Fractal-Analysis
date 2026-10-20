@@ -4,8 +4,8 @@
 [![Python: 3.9+](https://img.shields.io/badge/Python-3.9%2B-green.svg)](https://www.python.org/)
 [![PyPI version](https://img.shields.io/pypi/v/rash-hit-fractal-analysis?color=blue)](https://pypi.org/project/rash-hit-fractal-analysis/)
 [![npm version](https://img.shields.io/npm/v/rash-hit-fractal-analysis?color=green)](https://www.npmjs.com/package/rash-hit-fractal-analysis)
-[![Concept DOI](https://img.shields.io/badge/Concept_DOI-10.5281%2Fzenodo.22069152-blue.svg)](https://doi.org/10.5281/zenodo.22069152)
-[![Version DOI](https://img.shields.io/badge/Version_DOI-10.5281%2Fzenodo.22069941-blue.svg)](https://doi.org/10.5281/zenodo.22069941)
+[![Concept DOI](https://img.shields.io/badge/Concept_DOI-10.5281%2Fzenodo.21693694-blue.svg)](https://doi.org/10.5281/zenodo.21693694)
+[![Version DOI](https://img.shields.io/badge/Version_DOI_v1.2.1-10.5281%2Fzenodo.22261968-blue.svg)](https://doi.org/10.5281/zenodo.22261968)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0005--3423--255X-green.svg)](https://orcid.org/0009-0005-3423-255X)
 
 **RASH-HIT Fractal Analysis** is a research-grade, zero-rasterization computational geometry engine engineered for **exact vector box-counting**, **spatial occupancy profiling (fill vs. empty void ratio)**, and **fractal dimension ($D_B$)** analysis directly from Scalable Vector Graphics (SVG) vector motifs, architectural drawings, textile patterns, and graphic compositions.
@@ -165,8 +165,8 @@ rash-hit-fractal --dir ./input_svgs --levels 5
 
 If you use **RASH-HIT Fractal Analysis** in your research, thesis, journal articles, or architectural/textile studies, please cite the software using the persistent DOIs below:
 
-- **Concept DOI:** [10.5281/zenodo.22069152](https://doi.org/10.5281/zenodo.22069152)
-- **Version DOI (v1.0.1):** [10.5281/zenodo.22069941](https://doi.org/10.5281/zenodo.22069941) — v1.1.0 DOI will be minted on release (concept DOI always resolves to the latest version)
+- **Concept DOI:** [10.5281/zenodo.21693694](https://doi.org/10.5281/zenodo.21693694) — always resolves to the latest version
+- **Version DOI (v1.2.1):** [10.5281/zenodo.22261968](https://doi.org/10.5281/zenodo.22261968)
 - **Author ORCID:** [0009-0005-3423-255X](https://orcid.org/0009-0005-3423-255X)
 
 ### BibTeX
@@ -175,17 +175,17 @@ If you use **RASH-HIT Fractal Analysis** in your research, thesis, journal artic
   author    = {Nar{\c{c}}i{\c{c}}ek, Mehmet Ra{\s}it},
   title     = {RASH-HIT Fractal Analysis},
   year      = {2026},
-  version   = {1.0.1},
+  version   = {1.2.1},
   publisher = {GitHub},
-  doi       = {10.5281/zenodo.22069941},
-  url       = {https://doi.org/10.5281/zenodo.22069941},
+  doi       = {10.5281/zenodo.22261968},
+  url       = {https://doi.org/10.5281/zenodo.22261968},
   orcid     = {https://orcid.org/0009-0005-3423-255X},
   license   = {Apache-2.0}
 }
 ```
 
 ### APA
-> Narçiçek, M. R. (2026). *RASH-HIT Fractal Analysis* (Version 1.0.1) [Computer software]. GitHub. https://doi.org/10.5281/zenodo.22069941
+> Narçiçek, M. R. (2026). *RASH-HIT Fractal Analysis* (Version 1.2.1) [Computer software]. GitHub. https://doi.org/10.5281/zenodo.22261968
 
 ### RIS
 ```ris
@@ -193,10 +193,10 @@ TY  - COMP
 AU  - Narçiçek, Mehmet Raşit
 TI  - RASH-HIT Fractal Analysis
 PY  - 2026
-ET  - 1.0.1
+ET  - 1.2.1
 PB  - GitHub
-DO  - 10.5281/zenodo.22069941
-UR  - https://doi.org/10.5281/zenodo.22069941
+DO  - 10.5281/zenodo.22261968
+UR  - https://doi.org/10.5281/zenodo.22261968
 ER  - 
 ```
 

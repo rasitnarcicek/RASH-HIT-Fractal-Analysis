@@ -1,11 +1,11 @@
 ﻿@echo off
 setlocal EnableExtensions
 chcp 65001 >nul 2>&1
-title RASH-HIT Fractal Analysis 1.2.0 - Setup and Automated Installer
+title RASH-HIT Fractal Analysis 1.2.1 - Setup and Automated Installer
 cd /d "%~dp0"
 
 echo ===============================================================================
-echo            RASH-HIT Fractal Analysis 1.2.0 - Automated Windows Setup
+echo            RASH-HIT Fractal Analysis 1.2.1 - Automated Windows Setup
 echo ===============================================================================
 echo.
 
@@ -93,7 +93,7 @@ if errorlevel 1 (
 echo.
 echo ===============================================================================
 echo Kurulum tamamlandi.
-echo Gunluk kullanim icin RASH-HIT-Studio.bat dosyasini calistirin.
+echo Gunluk kullanim icin RASH-HIT-Analysis.bat dosyasini calistirin.
 echo ===============================================================================
 echo.
 pause

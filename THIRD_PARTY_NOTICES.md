@@ -24,3 +24,12 @@ RASH-HIT Fractal Analysis relies on third-party open-source computational softwa
 - **Project**: defusedxml
 - **License**: Python Software Foundation License (PSFL)
 - **Usage**: Used for secure XML parsing hardened against XML entity expansion (XXE) vulnerabilities.
+
+---
+
+## 3. Terminal User Interface
+
+### rich
+- **Project**: rich
+- **License**: MIT License
+- **Usage**: Terminal UI rendering for the interactive launcher (`launcher.py`): menu panels, the RASH-HIT ASCII logo, progress tables, environment checks, and analysis summaries.

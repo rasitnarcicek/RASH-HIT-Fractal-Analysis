@@ -43,6 +43,8 @@ class TestLauncherCLI(unittest.TestCase):
             cmd,
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             cwd=str(ROOT),
             input=stdin,
             stdin=stdin_arg,
@@ -138,7 +140,8 @@ class TestLauncherImport(unittest.TestCase):
     def test_help_lists_known_flags(self):
         res = subprocess.run(
             [sys.executable, str(LAUNCHER), "--help"],
-            capture_output=True, text=True, cwd=str(ROOT), timeout=30,
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            cwd=str(ROOT), timeout=30,
         )
         self.assertEqual(res.returncode, 0, res.stderr)
         for flag in ("--input", "--dir", "--levels", "--version", "--check", "--setup"):

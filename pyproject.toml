@@ -56,7 +56,7 @@ dependencies = [
 Homepage = "https://github.com/rasitnarcicek/RASH-HIT-Fractal-Analysis"
 Repository = "https://github.com/rasitnarcicek/RASH-HIT-Fractal-Analysis"
 "Bug Tracker" = "https://github.com/rasitnarcicek/RASH-HIT-Fractal-Analysis/issues"
-"Zenodo DOI" = "https://doi.org/10.5281/zenodo.22069941"
+"Zenodo DOI" = "https://doi.org/10.5281/zenodo.21693694"
 
 [project.scripts]
 rash-hit-fractal = "run_analysis:main"

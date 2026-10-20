@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright 2026 Mehmet Raşit Narçiçek
 """
-launcher.py — RASH-HIT Fractal Analysis v1.2.0 (CPU-only).
+launcher.py — RASH-HIT Fractal Analysis v1.2.1 (CPU-only).
 
 Tek resmi etkileşimli terminal başlatıcısı.  Tüm dağıtım kanalları
 (PyPI, npm, GitHub, Windows .bat, Linux/macOS .sh) bu modülü çağırır.
@@ -46,6 +46,15 @@ SRC = ROOT / "src"
 for p in (str(ROOT), str(SRC)):
     if p not in sys.path:
         sys.path.insert(0, p)
+
+# Windows'ta varsayılan konsol kodlaması (cp1254 vb.) RASH-HIT ASCII
+# logosundaki blok karakterleri (█) yazamıyor: UnicodeEncodeError.
+# stdout/stderr'i UTF-8'e sabitle — Türkçe/kodeksli konsol güvenliği.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8")
+    except (AttributeError, ValueError, OSError):
+        pass
 
 import numpy
 import defusedxml

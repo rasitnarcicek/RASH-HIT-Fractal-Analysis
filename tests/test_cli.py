@@ -18,6 +18,8 @@ class TestCLI(unittest.TestCase):
             [sys.executable, str(self.script_path), "--help"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             cwd=str(self.root_dir),
             stdin=subprocess.DEVNULL,
         )
@@ -31,6 +33,8 @@ class TestCLI(unittest.TestCase):
             [sys.executable, str(self.script_path), "--version"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             cwd=str(self.root_dir),
             stdin=subprocess.DEVNULL,
         )
@@ -42,6 +46,8 @@ class TestCLI(unittest.TestCase):
             [sys.executable, str(self.script_path), "--input", str(self.sample_svg), "--levels", "5"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             cwd=str(self.root_dir),
             stdin=subprocess.DEVNULL,
         )
@@ -85,6 +91,8 @@ class TestCLI(unittest.TestCase):
             [sys.executable, str(self.script_path), "--dir", str(svg_dir), "--levels", "3"],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             cwd=str(self.root_dir),
             stdin=subprocess.DEVNULL,
         )
