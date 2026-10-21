@@ -541,10 +541,21 @@ def build_fill_geometry_with_semantics(
 
     # Multi-subpath compound path
     if f_rule == FillRule.EVENODD:
-        # Parity XOR across all subpaths
-        fill_geom = poly_list[0]
-        for p in poly_list[1:]:
-            fill_geom = fill_geom.symmetric_difference(p)
+        # Parity XOR across all subpaths.
+        # NOTE (v1.3.0 perf port): symmetric_difference is associative and
+        # commutative, so a balanced binary XOR reduction yields the exact
+        # same geometry as the historical linear chain while avoiding its
+        # O(n^2)-ring-accumulation blowup (a 5,851-hole carpet path took
+        # minutes with the chain; the tree reduces in seconds).
+        def _xor_reduce(polys: List[Polygon]) -> Any:
+            if len(polys) == 1:
+                return polys[0]
+            mid = len(polys) // 2
+            left = _xor_reduce(polys[:mid])
+            right = _xor_reduce(polys[mid:])
+            return left.symmetric_difference(right)
+
+        fill_geom = _xor_reduce(poly_list)
         if not fill_geom.is_valid:
             fill_geom, rep_log = repair_invalid_polygon(
                 fill_geom,
